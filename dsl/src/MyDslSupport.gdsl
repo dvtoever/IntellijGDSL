@@ -1,0 +1,24 @@
+/**
+ * Created by dvtoever on 0006 6.
+ */
+
+def rootContext = context(scope: scriptScope(name: 'TestForm.groovy'))
+contributor(rootContext) {
+    method name: "MultiChannelForm", params: [attributes: "java.util.Map", closure: {}]
+}
+
+def formContext = context(scope: closureScope())
+contributor(formContext) {
+    def call = enclosingCall("MultiChannelForm")
+    if(call) {
+        method name: "Step", params: [attributes: "java.util.Map", closure: {}]
+    }
+}
+
+def stepContext = context(scope: closureScope())
+contributor(stepContext) {
+    def call = enclosingCall("Step")
+    if(call) {
+        method name: "Container", params: [attributes: "java.util.Map", cl: {}]
+    }
+}
